@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_module_verification</fullName>
+    <active>true</active>
+    <description>You cannot link a module to a trial if it is not active.</description>
+    <errorConditionFormula>IF( Module__r.Is_Active__c == false , true , false)</errorConditionFormula>
+    <errorMessage>Before linking a module to a trial, please verify that it is active.</errorMessage>
+</ValidationRule>

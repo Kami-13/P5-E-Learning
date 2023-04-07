@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <description>Take the total points and estimated time for the module object and set them in the trail-module.</description>
+    <environments>Default</environments>
+    <interviewLabel>Values to trail-module {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Values To Trail-Module</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Take the total points and estimated time for the module object and set them in the trail-module.</description>
+        <name>Points_Time_sum</name>
+        <label>Points-Time sum</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <inputAssignments>
+            <field>Estimated_Time__c</field>
+            <value>
+                <elementReference>$Record.Module__r.Total_Time__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Points__c</field>
+            <value>
+                <elementReference>$Record.Module__r.Total_Points__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Points_Time_sum</targetReference>
+        </connector>
+        <object>Trail_Module__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
