@@ -1,0 +1,9 @@
+.unit-tile {
+	display: block;
+	border: 1px solid #c2c2c2;
+	border-radius: .25rem;
+	background-color: #fae8d2;
+}
+.module-image {
+	height: 80px;
+}

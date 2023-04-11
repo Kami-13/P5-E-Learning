@@ -1,0 +1,36 @@
+<template>
+    <div class="c-container">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="12">
+                    <div class="page-section page-header">
+                        <template if:true={unit.data}>
+                            <lightning-card title={unit.title} icon-name="custom:custom55">
+                                <lightning-badge label={unit.Total_Points__c} slot="actions">+{unit.Total_Points__c} Points</lightning-badge>
+                                <p class="slds-p-horizontal_small">{unit.Estimated_Time__c}</p>
+                                <p slot="footer" class="slds-p-horizontal_small slds-text-heading_small">{unit.Content__c}</p>
+                            </lightning-card>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12">
+                    <lightning-layout>
+                        <lightning-layout-item padding="around-small" size="3">
+                            <div class="page-section page-right"></div>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small" size="6">
+                            <div class="page-section page-main">
+                                <template for:each={question} for:item="question">
+                                    <template if:true={question.data}>
+                                        <c-question-card unit-id={unit.Id} key={question.Id} question={question}></c-question-card>
+                                    </template>
+                                </template>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small" size="3">
+                            <div class="page-section page-right"></div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </template>	

@@ -1,0 +1,9 @@
+.module-card {
+	display: block;
+	border: 1px solid #c2c2c2;
+	border-radius: .25rem;
+	background-color: #5d4ee4;
+}
+.module-image {
+	height: 80px;
+}

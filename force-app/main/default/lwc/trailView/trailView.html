@@ -1,0 +1,40 @@
+<template>
+    <div class="c-container">
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item padding="around-small" size="12">
+                <div class="page-section page-header">
+                    <template if:true={trail.data}>
+                        <lightning-card title={trail.Name} icon-name="custom:custom78">
+                            <lightning-badge label={trail.Total_Points__c} slot="actions">+{trail.Total_Points__c} Points</lightning-badge>
+                            <p class="slds-p-horizontal_small">{trail.Description__c}</p>
+                            <div class="slds-p-around_medium lgc-bg">
+                                    <p class="slds-truncate" title={modules.length}>{modules.length}'_ Modules'</p>
+                            </div>
+                            <c-progress-bar value={trail.Progress__c}></c-progress-bar>
+                            <div class="slds-border_bottom"></div>
+                        </lightning-card>
+                    </template>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12">
+                <lightning-layout>
+                    <lightning-layout-item padding="around-small" size="3">
+                        <div class="page-section page-right"></div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <div class="page-section page-main">
+                            <template for:each={modules} for:item="module">
+                                <template if:true={module.data}>
+                                    <c-module-card trail-id={trail.Id} key={module.Id} module={module}></c-module-card>
+                                </template>
+                            </template>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="3">
+                        <div class="page-section page-right"></div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>	
