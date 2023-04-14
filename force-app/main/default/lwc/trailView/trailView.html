@@ -2,18 +2,25 @@
     <div class="c-container">
         <lightning-layout multiple-rows="true">
             <lightning-layout-item padding="around-small" size="12">
+                <div  class="trail-title">
                 <div class="page-section page-header">
-                    <template if:true={trail.data}>
-                        <lightning-card title={trail.Name} icon-name="custom:custom78">
-                            <lightning-badge label={trail.Total_Points__c} slot="actions">+{trail.Total_Points__c} Points</lightning-badge>
-                            <p class="slds-p-horizontal_small">{trail.Description__c}</p>
-                            <div class="slds-p-around_medium lgc-bg">
-                                    <p class="slds-truncate" title={modules.length}>{modules.length}'_ Modules'</p>
+                    <template if:true={trail}>
+                        <lightning-card title={trail.Name} class="trail-description" icon-name="custom:custom78">
+                            <span class="slds-badge" slot="actions">+{trail.Total_Points__c} Points</span>
+                            <p class="slds-p-horizontal_medium">{trail.Description__c}</p>
+                            <div class="slds-p-around_small lgc-bg">
+                                <template if:false={moduleSingular}>
+                                    <p class="slds-truncate trail-modules">{modules.length} Modules</p>
+                                </template>
+                                <template if:true={moduleSingular}>
+                                    <p class="slds-truncate trail-modules">{modules.length} Module</p>
+                                </template>  
                             </div>
-                            <c-progress-bar value={trail.Progress__c}></c-progress-bar>
-                            <div class="slds-border_bottom"></div>
+                            <p class="progress-bar slds-p-horizontal_medium">Trail Progress</p>
+                            <lightning-progress-bar value={progressTrail} size="large" variant="circular"></lightning-progress-bar>
                         </lightning-card>
                     </template>
+                </div>
                 </div>
             </lightning-layout-item>
             <lightning-layout-item padding="around-small" size="12">
@@ -23,9 +30,9 @@
                     </lightning-layout-item>
                     <lightning-layout-item padding="around-small" size="6">
                         <div class="page-section page-main">
-                            <template for:each={modules} for:item="module">
-                                <template if:true={module.data}>
-                                    <c-module-card trail-id={trail.Id} key={module.Id} module={module}></c-module-card>
+                            <template if:true={modules}>
+                                <template for:each={modules} for:item="module">
+                                    <c-module-card key={module.Id} module={module} related-units={units}></c-module-card>
                                 </template>
                             </template>
                         </div>

@@ -1,6 +1,15 @@
 .question-card {
 	display: block;
-	border: 1px solid #c2c2c2;
+	border: .5px solid #91db8b;
 	border-radius: .25rem;
-	background-color: #fae8d2;
+}
+.question-line{
+	border: 2px solid #91db8b;
+}
+.TILE_WRAPPER_SELECTED_CLASS{
+	background-color: #91db8b !important;
+}
+.tile-wrapper {
+    cursor: pointer;
+    padding: 5px;
 }

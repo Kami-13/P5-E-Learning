@@ -1,24 +1,22 @@
 <template>
-    <lightning-card title={unit.Name} class="unit-tile">
-        <template if:true={unit.data}>
+    <template if:true={unit}>
+        <div class="slds-border_top slds-m-vertical_small unit-detail"></div>
+        <lightning-card title={unit.Name} class="unit-tile">
             <div slot="actions">
-                <lightning-badge label={unit.Total_Pöints__c}></lightning-badge>
+                <span class="slds-badge" label={unit.Total_Points__c}>+{unit.Total_Points__c} Points</span>
             </div>
-            <div class="slds-var-p-horizontal_medium bear-tile-body">
+            <div class="slds-var-p-horizontal_medium">
                 <div class="slds-media">
                     <div class="slds-media__figure">
-                        <img src="https://i.imgur.com/RcZRbMq.png" class="module-image"/>
+                        <img src="https://i.imgur.com/RcZRbMq.png" class="unit-image"/>
                     </div>
                     <div class="slds-media__body">
-                        <p class="slds-var-m-bottom_small">{unit.Description__c}</p>
-                        <p class="slds-var-m-bottom_small">{unit.Skills__c}</p>
-                        <p class="slds-var-m-bottom_small">{unit.Estimated_Time__c}</p>
+                        <h3 class="slds-var-m-bottom_small">Estimated time: {unit.Estimated_Time__c}</h3>
                     </div>
                 </div>
             </div>
-        </template>
-        <p slot="footer">
-            <a href={unit.url}>Go to Unit</a>
-        </p>
-    </lightning-card>
+        <div class="slds-border_top slds-m-vertical_small unit-line"></div>
+        <h1 onclick={handleNavigateToUnit} class="unit-bottom">Go to Unit</h1>
+        </lightning-card>
+    </template>
 </template>

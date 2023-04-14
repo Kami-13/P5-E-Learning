@@ -1,37 +1,33 @@
-import { LightningElement, wire, api } from 'lwc';
-import getModulesByTrailId from '@salesforce/apex/MyController.getModulesByTrailId';
+import { LightningElement, api } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class ModuleCard extends LightningElement {
+export default class ModuleCard extends NavigationMixin(LightningElement) {
 
-    @api trailId;
-    modules;
+    @api module;
+    @api relatedUnits = [];
 
-    @wire(getModulesByTrailId, { trailId: '$trail.Id' })
-    getModules({data, error}) {
-        this.modules = result;
+    navigateToModuleView() {
 
-        if (data) {
-            this.modules = {
-                Name: data.Name,
-                Total_Points__c: data.Total_Points__c,
-                Description__c: data.Description__c,
-                Estimated_Time__c: data.Estimated_Time__c,
-                Skills__c: data.Skills__c
-                // Progress__c: data.Progress__c
-            };
-        } else if (error) {
-            console.error(result.error);
-        }
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: this.module.Id,
+                objectApiName: 'Module__c',
+                actionName: 'view'
+            }
+        });
     }
 
-    toggleSection(event) {
-        let buttonid = event.currentTarget.dataset.buttonid;
-        let currentsection = this.template.querySelector('[data-id="' + buttonid + '"]');
-        if (currentsection.className.search('slds-is-open') == -1) {
-            currentsection.className = 'slds-section slds-is-open';
-        } else {
-            currentsection.className = 'slds-section slds-is-close';
-        }
+    navigateToUnitView(recordId) {
+        
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: recordId,
+                objectApiName: 'Unit__c',
+                actionName: 'view'
+            }
+        });
     }
 
 }

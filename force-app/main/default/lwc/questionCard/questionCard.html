@@ -1,24 +1,33 @@
 <template>
-    <lightning-card title="Quiz" class="question-card">
-        <div class="slds-border_bottom slds-m-vertical_small"></div>
-        <template for:each={question} for:item="question">
-            <template if:true={question.data}>
-                <p class="slds-p-horizontal_small" key={question.Content__c}>{question.Content__c}</p>
-                <div class="slds-var-p-horizontal_medium question-card-body" key={question.Content__c}>
-                    <div class="slds-media slds-media_responsive">
-                        <!-- <div class="slds-media__body"></div> -->
-                        <div class="slds-media__body">
-                                <lightning-radio-group name="radioGroup"
-                                                    label="Opciones"
-                                                    options={answers}
-                                                    value={value}
-                                                    type="radio"></lightning-radio-group>
-                        </div>
-                    </div>
-                </div>
-                <div class="slds-border_bottom slds-m-vertical_small" key={question.Content__c}></div>
-            </template>
+    <lightning-card title="Quiz" class="slds-m-bottom_small question-card">
+        <div class="slds-border_bottom slds-m-vertical_small question-line"></div>
+        <template if:true={wireQuestion}>    
+                <template for:each={wireQuestion} for:item="question">
+                    <p class="slds-p-horizontal_small slds-text-heading_small slds-text-align_center" key={question.Id}>{question.Content__c}</p>
+                        <template if:true={question.Answers__r}>
+                            <ul key={question.Id}>  
+                                <template for:each={question.Answers__r} for:item="answer">
+
+                                    <fieldset class="slds-form-element slds-p-around_small my-element" key={answer.Id}>
+                                        <legend class="slds-form-element__legend slds-form-element__label"></legend>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-radio_button-group">
+                                                <span class="slds-button slds-radio_button">
+                                                    <input type="radio" name={answer.Id} id={answer.Id} value={answer.Content__c} data-id={answer.Id} data-qid={question.Id} onclick={handleClick}/>
+                                                    <label class="slds-radio_button__label slds-p-around_small slds-text-align_center" for={answer.Id}>
+                                                        <span class="slds-radio_faux">{answer.Content__c}</span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </template>
+                            </ul>
+                        </template>
+                    <div class="slds-border_bottom slds-m-vertical_small question-line" key={questions}></div>
+                </template>
+            <lightning-button class="slds-button slds-button_stretch" variant="success" label="Check Quiz" title="Check question" onclick={handleSubmit}></lightning-button>
         </template>
-            <lightning-button variant="success" label="Check question" title="Check question" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
     </lightning-card>
 </template>

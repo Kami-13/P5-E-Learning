@@ -3,9 +3,11 @@
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item padding="around-small" size="12">
                     <div class="page-section page-header">
-                        <template if:true={unit.data}>
-                            <lightning-card title={unit.title} icon-name="custom:custom55">
-                                <lightning-badge label={unit.Total_Points__c} slot="actions">+{unit.Total_Points__c} Points</lightning-badge>
+                        <template if:true={unit}>
+                            <lightning-card title={unit.Name} icon-name="custom:custom55">
+                                <div slot="actions">
+                                    <span class="slds-badge">+{unit.Total_Points__c} Points</span>
+                                </div>
                                 <p class="slds-p-horizontal_small">{unit.Estimated_Time__c}</p>
                                 <p slot="footer" class="slds-p-horizontal_small slds-text-heading_small">{unit.Content__c}</p>
                             </lightning-card>
@@ -19,10 +21,8 @@
                         </lightning-layout-item>
                         <lightning-layout-item padding="around-small" size="6">
                             <div class="page-section page-main">
-                                <template for:each={question} for:item="question">
-                                    <template if:true={question.data}>
-                                        <c-question-card unit-id={unit.Id} key={question.Id} question={question}></c-question-card>
-                                    </template>
+                                <template if:true={questions}>
+                                        <c-question-card key={question.Id} wire-question={questions} unit={unit}></c-question-card>
                                 </template>
                             </div>
                         </lightning-layout-item>

@@ -1,58 +1,42 @@
 import { LightningElement, api, wire } from 'lwc';
-import getUnitWrapper from '@salesforce/apex/UnitWrapper.getUnitWrapper';
 import { NavigationMixin } from 'lightning/navigation';
+import getTrailId from '@salesforce/apex/TrailWrapper.getTrailId';
 
 export default class UnitCard extends NavigationMixin(LightningElement) {
-    
-  @api unit;
-  @api moduleId;
+  
+    @api recordId;
+    modules = [];
+    currentModule;
+    units = [];
+    wrapper;
+    //moduleProgress;
+    moduleUrls;
+    trailUrl;
 
-  module;
-  units;
+    @wire(getTrailId, { moduleId: '$recordId' })
+    wiredTrailId({ data, error }) {
 
-  @wire(getUnitWrapper, {unitId: '$unit.Id'})
-  wiredWrapper({ error, data }) {
-    if (data) {
-      this.module ={
-        Name: data.Name,
-        Total_Points__c: data.Total_Points__c,
-        Description__c: data.Description__c,
-        unitUrl: `/lightning/r/Unit__c/${this.unitId}/view`,
-      }
-    } else if (error) {
-      console.error(error);
-    }
-  }
+        if (data) {
 
-  get units() {
-    return this.wrapper ? this.wrapper.units : [];
-  }
+            this.wrapper = data;
 
-  handleNavigateToUnit(event) {
+            this.modules = data.modules;
 
-    const unitId = event.currentTarget.dataset.unitId;
+            this.currentModule = this.modules.find(module => module.Id === this.recordId);
 
-    this[NavigationMixin.Navigate]({
-        type: 'standard__recordPage',
-        attributes: {
-            recordId: unitId,
-            objectApiName: 'Unit__c',
-            actionName: 'view'
+            console.log(this.currentModule);
+
+            this.units = data.units;
+
+            //this.moduleProgress = this.currentModule.Module_Progresses__r.Progress__c;
+
+        } else if (error) {
+
+            console.log(error);
         }
-    }).then(() => {
-        const clickedUnit = this.units.find(unit => unit.Id === unitId);
-        this.lastVisitedUnit = clickedUnit;
-    }).catch(error => {
-        console.error(error);
-    });
 
-    const lastVisitedUnitCard = this.template.querySelector('c-unit-card');
-    if (lastVisitedUnitCard) {
-        lastVisitedUnitCard.updateUnit(this.lastVisitedUnit);
+
     }
-  }
-
-  //logica para traer TODOS los modulos
 
 
 }

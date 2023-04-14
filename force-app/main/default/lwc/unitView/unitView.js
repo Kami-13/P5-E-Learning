@@ -1,22 +1,25 @@
 import { LightningElement, wire, api } from 'lwc';
-import getTrail from '@salesforce/apex/MyController.getTrails';
+import getUnitWrapper from '@salesforce/apex/UnitService.getUnitWrapper';
 
 export default class UnitView extends LightningElement {
 
-    @api unit;
-    questions;
+    @api recordId;
+    unit;
+    questions = [];
 
-    @wire(getTrail, { unitId: '$unitdId' })
-    wiredGetTrail({ error, data }) {
+    @wire(getUnitWrapper, { unitId: '$recordId' })
+    wiredGetUnit({ error, data }) {
+
+        console.log(this.recordId);
+
         if (data) {
 
-            this.unit = {
-                Name: data.Name,
-                Total_Points__c: data.Total_Points__c,
-                Description__c: data.Description__c,
-            };
+            this.unit = data.unit;
 
-            this.questions = data.Question__r;
+            this.questions = data.questions;
+
+            console.log('aca abajo se supone que hay preguntas y respuestas');
+            console.log(this.questions);
 
         } else if (error) {
             

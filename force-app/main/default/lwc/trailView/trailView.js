@@ -1,31 +1,38 @@
-import { LightningElement, wire } from 'lwc';
-import { CurrentPageReference } from 'lightning/navigation';
+import { LightningElement, wire, api } from 'lwc';
 import getTrailWrapper from '@salesforce/apex/UnitService.getTrailWrapper';
 
 export default class TrailView extends LightningElement {
 
+    @api recordId;
     trail;
-    modules;
+    modules = [];
+    units = [];
+    moduleSingular;
+    progressTrail;
 
-    @wire(CurrentPageReference) pageRef;
-
-    @wire(getTrailWrapper, { trailId: '$pageRef.state.recordId' })
+    @wire(getTrailWrapper, { trailId: '$recordId' })
     wiredGetTrail({ data, error }) {
 
         if (data) {
 
-            this.trail = {
-                Name: data.Name,
-                Total_Points__c: data.Total_Points__c,
-                Description__c: data.Description__c,
-                // Progress__c: data.Progress__c
-            };
+            this.trail = data.trail;
 
             this.modules = data.modules;
 
+            this.units = data.units;
+
+            console.log(this.units);
+
+            this.progressTrail = data.progressTrail;
+
         } else if (error) {
-            
+            console.log('Estoy en el error' + error);
         }
+
+        if(this.modules.size == 1){
+            this.moduleSingular = true;
+        }
+
     }
 
 }

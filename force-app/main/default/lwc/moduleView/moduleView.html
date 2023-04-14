@@ -2,17 +2,16 @@
     <div class="c-container">
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item padding="around-small" size="12">
-                    <div class="page-section page-header slds-text-heading_large">
-                        <template if:true={module.data}>
-                            <lightning-card title={module.Name} icon-name="custom:custom62">
-                                <lightning-badge label={module.Total_Points__c} slot="actions">+{trail.Total_Points__c} Points</lightning-badge>
-                                <p class="slds-p-horizontal_small slds-text-heading_medium">{module.Description__c}</p>
-                                <div class="slds-p-around_medium lgc-bg">
-                                        <p class="slds-truncate slds-text-heading_small" title={units.length}>{units.length}'_ Units'</p>
-                                </div>
-                                <c-progress-bar></c-progress-bar>
-                                <div class="slds-border_bottom"></div>
-                            </lightning-card>
+                    <div class="page-section page-header">
+                        <template if:true={wrapper}>
+                            <lightning-card title={currentModule.Name} icon-name="custom:custom62">
+                                <span class="slds-badge" slot="actions">+{currentModule.Total_Points__c} Points</span>
+                            <p class="slds-p-horizontal_small slds-text-heading_medium">{currentModule.Description__c}</p>
+                            <div class="slds-p-around_medium lgc-bg">
+                                    <p class="slds-truncate slds-text-heading_small" title={units.length}>{units.length} Units</p>
+                            </div>
+                            <lightning-progress-bar value={moduleProgress} size="large" variant="circular"></lightning-progress-bar>
+                        </lightning-card>
                         </template>
                     </div>
                 </lightning-layout-item>
@@ -20,17 +19,19 @@
                     <lightning-layout>
                         <lightning-layout-item padding="around-small" size="3">
                             <div class="page-section page-right">
-                                <h1 class="slds-text-heading_medium slds-text-align_center slds-m-bottom_small">Last visited Unit</h1>
-                                <!-- Agregar evento que guarde el ultimo 'Go to unit' -->
-                                <c-unit-card></c-unit-card>
+                                <!-- <h1 class="slds-text-heading_medium slds-text-align_center slds-m-bottom_small">Back to Trails</h1>
+                                <ul class="slds-text-heading_small slds-m-vertical_x-small">
+                                        <li class="slds-text-align_center"><a href={trailUrl}>Go</a>
+                                        </li>
+                                </ul> -->
                             </div>
                         </lightning-layout-item>
                         <lightning-layout-item padding="around-small" size="6">
                             <div class="page-section page-main">
                                 <h1 class="slds-text-heading_medium slds-text-align_center slds-m-bottom_small">Units</h1>
-                                <template for:each={unit} for:item="unit">
-                                    <template if:true={unit.data}>
-                                        <c-unit-card module-id={module.Id} key={unit.Id} unit={unit}></c-unit-card>
+                                <template if:true={units}>
+                                    <template for:each={units} for:item="unit">                                
+                                        <c-unit-card key={unit.Id} unit={unit}></c-unit-card>
                                     </template>
                                 </template>
                             </div>
@@ -38,16 +39,16 @@
                         <lightning-layout-item padding="around-small" size="3">
                             <div class="page-section page-right">
                                 <div class="slds-text-align_center slds-text-heading_medium">
-                                    <h2>All Modules</h2>
+                                    <!-- <h2>All Modules</h2>
                                     <div class="slds-border_bottom slds-m-vertical_small"></div>
                                     <ul class="slds-text-heading_small slds-m-vertical_x-small">
-                                        <template for:each={module} for:item="module">
-                                            <template if:true={module.data}>
-                                                <li key={module.Id}><a href={module.url}>{module.Name}</a>
+                                        <template if:true={modules}>
+                                            <template for:each={modules} for:item="module">
+                                                <li key={module.Id}><a href="/lightning/r/Module__c/module.Id">{module.Name}</a>
                                                 </li>
                                             </template>
                                         </template>
-                                    </ul>
+                                    </ul> -->
                                 </div>
                             </div>
                         </lightning-layout-item>

@@ -1,9 +1,25 @@
 .unit-tile {
 	display: block;
-	border: 1px solid #c2c2c2;
+	border: 1px solid #fe8f7d;
 	border-radius: .25rem;
-	background-color: #fae8d2;
 }
-.module-image {
+.unit-image {
 	height: 80px;
+}
+.unit-line{
+	border: 2px solid #fe8f7d;
+}
+.unit-bottom{
+	text-align: center;
+	font-size: medium;
+	font-weight: 600;
+}
+.unit-bottom:hover{
+	color: #fe8f7d;
+}
+.unit-detail{
+	border: 5px solid #fe8f7d;
+}
+.description{
+	font-size: medium;
 }
